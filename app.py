@@ -1,9 +1,45 @@
 from flask import Flask, request 
-import pandas as pd 
-app = Flask(__name__) 
+import pandas as pd
+import sqlite3
 
-# teset
-#home root 
+app = Flask(__name__)
+
+@app.route('/employees')
+def employe():
+    conn = sqlite3.connect("data/chinook.db")
+    query = """ 
+    SELECT * FROM employees
+    """
+    data = pd.read_sql_query(query,conn)
+    return data.to_json()
+
+#showing all genres and track
+@app.route('/genre')
+def genre():
+    conn = sqlite3.connect("data/chinook.db")
+    query = """
+    SELECT tracks.Name as Judul, genres.name as genre
+    FROM tracks
+    JOIN genres ON genres.genreid = tracks.genreid
+    """
+    data = pd.read_sql_query(query,conn)
+    return data.to_json()
+
+#dynamic genre, showing all tracks in genre by request genre name
+@app.route('/genre/<name>')
+def genre_dynamic(name):
+    conn  = sqlite3.connect("data/chinook.db")
+    query = """
+    SELECT tracks.Name as Judul, genres.name as genre
+    FROM tracks
+    JOIN genres ON genres.genreid = tracks.genreid
+    """
+    data = pd.read_sql_query(query, conn)
+    author = name
+    kondisi = data['genre'] == author
+    data = data[kondisi]
+    return data.to_json()
+
 @app.route('/', methods=['POST'])
 def homepage():
     return "welcomeeee"
@@ -29,8 +65,6 @@ def getauthor(name):
     condition = books['authors'] == author
     books = books[condition]
     return books.to_json()
-
-
 
 
 # mendapatkan keseluruhan data dari <data_name>
