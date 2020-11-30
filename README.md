@@ -3,14 +3,14 @@ Ini adalah projek dalam rangka membuat Web API menggunakan python flask. API dib
 
 Dalam Web ini saya membuat 4 endpoints, (2 statis dan 2 dynamic), berikut diantaranya :
 1. ('/artist') , return dalam format JSON berupa tabel yang berisikan kolom genre,track,album dan artist (endpoint statis)
-2. ('/get_genre/'), return dalam format JSON berupa semua track yang terkandung dalam genre . (endpoint dinamis)
+2. ('/get_genre/<nama_genre>'), return dalam format JSON berupa semua track yang terkandung dalam genre . (endpoint dinamis)
 3. ('/Genre/Populer/TOP10'), return dalam format JSON berupa genre populer (berdasarkan total kemunculan)
-4. ('/Track/Populer/'), return dalam format JSON berupa Top 10 Track populer (berdasarkan total yang sering dibeli) dalam tiap bulan. Disini nama bulan saya jadikan dynamic.
+4. ('/Track/Populer/<nama_bulan>'), return dalam format JSON berupa Top 10 Track populer (berdasarkan total yang sering dibeli) dalam tiap bulan. Disini nama bulan saya jadikan dynamic.
 
-Jika kamu ingin mencobanya, kamu dapat mengaktes lewat (copy-paste) di bawah ini : 
+Jika kamu ingin mencobanya, kamu dapat mengakses lewat link di bawah ini : 
 - https://fathonirisman27.herokuapp.com/artist 
 - https://fathonirisman27.herokuapp.com/get_genre/<nama_genre>
 - https://fathonirisman27.herokuapp.com/Genre/Populer/TOP10
-- https://fathonirisman27.herokuapp.com/Track/Populer/<Nama Bulan>
+- https://fathonirisman27.herokuapp.com/Track/Populer/<Nama_bulan>
  
   
