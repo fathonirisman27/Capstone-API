@@ -5,7 +5,7 @@ Dalam Web ini saya membuat 4 endpoints, (2 statis dan 2 dynamic), berikut dianta
 1. ('/artist') , return dalam format JSON berupa tabel yang berisikan kolom genre,track,album dan artist (endpoint statis)
 2. ('/get_genre/<nama_genre>'), return dalam format JSON berupa semua track yang terkandung dalam genre . (endpoint dinamis)
 3. ('/Genre/Populer/TOP10'), return dalam format JSON berupa genre populer (berdasarkan total kemunculan)
-4. ('/Track/Populer/<nama_bulan>'), return dalam format JSON berupa Top 10 Track populer (berdasarkan total yang sering dibeli) dalam tiap bulan. Disini nama bulan saya jadikan dynamic.
+4. ('/Track/Populer/<nama_bulan>'), return dalam format JSON berupa Top 10 Track populer (berdasarkan total yang sering dibeli) di setiap bulan. (endpoint dinamis)
 
 Jika kamu ingin mencobanya, kamu dapat mengakses lewat link di bawah ini : 
 - https://fathonirisman27.herokuapp.com/artist 
