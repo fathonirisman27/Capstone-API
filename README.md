@@ -11,6 +11,6 @@ Jika kamu ingin mencobanya, kamu dapat mengakses lewat link di bawah ini :
 - https://fathonirisman27.herokuapp.com/artist 
 - https://fathonirisman27.herokuapp.com/get_genre/<nama_genre>
 - https://fathonirisman27.herokuapp.com/Genre/Populer/TOP10
-- https://fathonirisman27.herokuapp.com/Track/Populer/<Nama_bulan>
+- https://fathonirisman27.herokuapp.com/Track/Populer/<nama_bulan>
  
   
