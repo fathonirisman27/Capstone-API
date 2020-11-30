@@ -8,8 +8,9 @@ Dalam Web ini saya membuat 4 endpoints, (2 statis dan 2 dynamic), berikut dianta
 4. ('/Track/Populer/'), return dalam format JSON berupa Top 10 Track populer (berdasarkan total yang sering dibeli) dalam tiap bulan. Disini nama bulan saya jadikan dynamic.
 
 Jika kamu ingin mencobanya, kamu dapat mengaktes lewat (copy-paste) di bawah ini : 
-If you want to try it, you can access (copy-paste it) : 
- - 
- -
- -
- - 
+- https://fathonirisman27.herokuapp.com/artist 
+- https://fathonirisman27.herokuapp.com/get_genre/<nama_genre>
+- https://fathonirisman27.herokuapp.com/Genre/Populer/TOP10
+- https://fathonirisman27.herokuapp.com/Track/Populer/<Nama Bulan>
+ 
+  
