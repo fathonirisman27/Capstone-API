@@ -4,29 +4,28 @@ import sqlite3
 
 app = Flask(__name__)
 
-@app.route('/employees')
-def employe():
-    conn = sqlite3.connect("data/chinook.db")
-    query = """ 
-    SELECT * FROM employees
-    """
-    data = pd.read_sql_query(query,conn)
-    return data.to_json()
-
-#showing all genres and track
-@app.route('/genre')
-def genre():
+#showing table that contains genres,track,albums,artist (static)
+@app.route('/artist')
+def artist():
     conn = sqlite3.connect("data/chinook.db")
     query = """
-    SELECT tracks.Name as Judul, genres.name as genre
-    FROM tracks
-    JOIN genres ON genres.genreid = tracks.genreid
+    SELECT artists.Name as Artist, albums.Title as albums, tracks.Name as Track, genres.Name as genre
+    FROM artists
+    LEFT JOIN albums
+    ON artists.ArtistId = albums.ArtistId
+    LEFT JOIN tracks
+    ON albums.AlbumId = tracks.AlbumID 
+    LEFT JOIN genres
+    ON tracks.GenreID = genres.GenreId
     """
     data = pd.read_sql_query(query,conn)
+    data = data.dropna()
     return data.to_json()
+    
 
-#dynamic genre, showing all tracks in genre by request genre name
-@app.route('/genre/<name>')
+
+#showing all tracks in genre by request genre name (dynamic)
+@app.route('/get_genre/<name>')
 def genre_dynamic(name):
     conn  = sqlite3.connect("data/chinook.db")
     query = """
@@ -40,47 +39,46 @@ def genre_dynamic(name):
     data = data[kondisi]
     return data.to_json()
 
-@app.route('/', methods=['POST'])
-def homepage():
-    return "welcomeeee"
-
-# mendapatkan buku 
-@app.route('/ambil_buku')
-def ambilbuku():
-    data = pd.read_csv('data/books_c.csv')
-    return data.to_json() # atau integer, atau string
-
-# buat endpoint yang menghasilkan hasil crosstabulasi dari data books_c.csv
-@app.route('/top_rating_book')
-def topratingbook():
-    books = pd.read_csv('data/books_c.csv')
-    condition  = books['average_rating'] == 5
-    books = books[condition]
-    return books.to_json()
-
-@app.route('/get_author/<name>')
-def getauthor(name):
-    author = name
-    books = pd.read_csv('data/books_c.csv')
-    condition = books['authors'] == author
-    books = books[condition]
-    return books.to_json()
+ #Top 10 genre paling populer (based on most frequency) (static)
+@app.route('/Genre/Populer/TOP10')
+def top_genre():
+    conn = sqlite3.connect("data/chinook.db")
+    query = """
+    SELECT tracks.Name as Judul, genres.name as genre
+    FROM tracks
+    JOIN genres ON genres.genreid = tracks.genreid
+    """
+    data = pd.read_sql_query(query,conn)
+    top10_genre = pd.crosstab(
+                   index = data['genre'],
+                   columns = 'Total'
+                   ).sort_values('Total',ascending=False).head(10)
+    return top10_genre.to_json()
 
 
-# mendapatkan keseluruhan data dari <data_name>
-@app.route('/data/get/<data_name>', methods=['GET']) 
-def get_data(data_name): 
-    data = pd.read_csv('data/' + str(data_name))
-    return (data.to_json())
- 
-
-# mendapatkan data dengan filter nilai <value> pada kolom <column>
-@app.route('/data/get/equal/<data_name>/<column>/<value>', methods=['GET']) 
-def get_data_equal(data_name, column, value): 
-    data = pd.read_csv('data/' + str(data_name))
-    mask = data[column] == value
-    data = data[mask]
-    return (data.to_json())
+# Track populer (top 10) berdasarkan bulan (purchased by month)-dynamic
+@app.route('/Track/Populer/<month>')
+def track(month):
+    conn = sqlite3.connect("data/chinook.db")
+    query = """
+    SELECT invoices.InvoiceDate, tracks.Name as Judul
+    FROM invoices 
+    LEFT JOIN invoice_items 
+    ON invoices.InvoiceID = invoice_items.InvoiceID
+    LEFT JOIN tracks 
+    ON tracks.TrackId = invoice_items.TrackId 
+    """
+    df = pd.read_sql_query(query,con = conn , parse_dates='InvoiceDate')
+    df['Bulan'] = df['InvoiceDate'].dt.month_name()
+    bulan = month
+    condition = df['Bulan'] == bulan
+    data = df[condition]
+    data_new = pd.crosstab(
+                index = data['Judul'],
+                columns= 'Total'
+                ).sort_values('Total',ascending=False).head(10)
+    return data_new.to_json()
+     
 
 if __name__ == '__main__':
     app.run(debug=True, port=5000) 
