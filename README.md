@@ -1,38 +1,12 @@
-# p4da-capstone-api
-This is Algoritma's Python for Data Analysis Capstone Project. This project aims to create a simple API to fetch data from Heroku Server. 
 
-As a Data Scientist, we demand data to be accessible. And as a data owner, we are careful with our data. As the answer, data owner create an API for anyone who are granted access to the data to collect them. In this capstone project, we will create Flask Application as an API and deploy it to Heroku Web Hosting. 
+Ini adalah projek dalam rangka membuat Web API menggunakan python flask. API dibutuhkan untuk menghubungkan antara user (pihak 3) dengan database yang saya miliki. Dalam hal ini saya menggunakan database bernama chinook.db. Database ini berisikan tabel-tabel diantaranya : genre,album,track,invoice,dsb. Adapun skema hubungan antara masing-masing tabel saya lampirkan dalam folder data.
 
-We provide a brief guideline to create the API and how to Deploy in `Capstone Guideline.ipynb` using Bahasa Indonesia. 
+Dalam Web ini saya membuat 4 endpoints, (2 statis dan 2 dynamic), berikut diantaranya :
 
-You can check the rubrics on rubrics folder
-___
-## Dependencies : 
-- Pandas    (pip install pandas)
-- Flask     (pip install flask)
-- Gunicorn  (pip install gunicorn)
-___
-## Goal 
-- Create Flask API App
-- Deploy to Heroku
-- Build API Documentation of how your API works
-- Implements the data analysis and wrangling behind the works
-
-___
-We have deployed a simple example on : https://algo-capstone.herokuapp.com
-Here's the list of its endpoints: 
-```
-1. / , method = GET
-Base Endpoint, returning welcoming string value. 
-
-2. /data/get/<data_name> , method = GET
-Return full data <data_name> in JSON format. Currently available data are:
-    - books_c.csv
-    - pulsar_stars.csv 
-    
-3. /data/get/equal/<data_name>/<column>/<value> , method = GET
-Return all <data_nam> where the value of column <column> is equal to <value>
-```
+('/artist') , return dalam format JSON berupa tabel yang berisikan kolom genre,track,album dan artist (endpoint statis)
+('/get_genre/'), return dalam format JSON berupa semua track yang terkandung dalam genre . (endpoint dinamis)
+('/Genre/Populer/TOP10'), return dalam format JSON berupa genre populer (berdasarkan total kemunculan)
+('/Track/Populer/'), return dalam format JSON berupa Top 10 Track populer (berdasarkan total yang sering dibeli) dalam tiap bulan. Disini nama bulan saya jadikan dynamic.
 
 If you want to try it, you can access (copy-paste it) : 
 - https://algo-capstone.herokuapp.com
