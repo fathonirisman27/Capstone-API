@@ -7,10 +7,9 @@ Dalam Web ini saya membuat 4 endpoints, (2 statis dan 2 dynamic), berikut dianta
 3. ('/Genre/Populer/TOP10'), return dalam format JSON berupa genre populer (berdasarkan total kemunculan)
 4. ('/Track/Populer/'), return dalam format JSON berupa Top 10 Track populer (berdasarkan total yang sering dibeli) dalam tiap bulan. Disini nama bulan saya jadikan dynamic.
 
+Jika kamu ingin mencobanya, kamu dapat mengaktes lewat (copy-paste) di bawah ini : 
 If you want to try it, you can access (copy-paste it) : 
-- https://algo-capstone.herokuapp.com
-- https://algo-capstone.herokuapp.com/data/get/books_c.csv
-- https://algo-capstone.herokuapp.com/data/get/pulsar_stars.csv
-- https://algo-capstone.herokuapp.com/data/get/equal/books_c.csv/isbn/0439785960
-- https://algo-capstone.herokuapp.com/data/get/equal/books_c.csv/authors/J.K. Rowling
-- and so on, just follow the endpoint's pattern
+ - 
+ -
+ -
+ - 
