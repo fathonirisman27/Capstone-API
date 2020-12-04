@@ -21,7 +21,27 @@ def artist():
     data = pd.read_sql_query(query,conn)
     data = data.dropna()
     return data.to_json()
-    
+
+#Showing a table that contain how many album and tracks in spesific artist with a spesific genre
+@app.route('/genre/artist/count_albums_and_track')
+def hitungtrackalbum ():
+    conn = sqlite3.connect("data/chinook.db")
+    query = """
+    SELECT artists.Name as Artist, albums.Title as albums, tracks.Name as Track, genres.Name as genre
+    FROM artists
+    LEFT JOIN albums
+    ON artists.ArtistId = albums.ArtistId
+    LEFT JOIN tracks
+    ON albums.AlbumId = tracks.AlbumID 
+    LEFT JOIN genres
+    ON tracks.GenreID = genres.GenreId
+    """
+    data = pd.read_sql_query(query, conn)
+    data = data.dropna()
+    data_gb = data.groupby(['genre','Artist']).count()
+    data_ut = data_gb.unstack(1) #using genre as index, so we use level = 1
+    data_ut_complete = data_ut.fillna(0) #replace NaN with 0 because of in that genres and track, there is no albums or track
+    return data_ut_complete.to_json()
 
 
 #showing all tracks in genre by request genre name (dynamic)
@@ -79,6 +99,10 @@ def track(month):
                 ).sort_values('Total',ascending=False).head(10)
     return data_new.to_json()
      
+
+
+
+
 
 if __name__ == '__main__':
     app.run(debug=True, port=5000) 
